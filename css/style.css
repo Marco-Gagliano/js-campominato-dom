@@ -1,0 +1,59 @@
+body{
+  font-family: Arial, Helvetica, sans-serif
+}
+.minefield{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #021527;
+  height: 100vh;
+}
+
+.container{
+  display: flex;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  width: 500px;
+  height: 500px;
+}
+
+.square {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid white;
+  color: white;
+}
+
+.square-easy{    
+  width: calc(100% / 7);
+  height: calc(100% / 7);
+}  
+
+.square-medium{    
+  width: calc(100% / 9);
+  height: calc(100% / 9);
+}  
+
+.square-hard{    
+  width: calc(100% / 10);
+  height: calc(100% / 10);
+} 
+
+.square-ultra-nightmare{    
+  width: calc(100% / 15);
+  height: calc(100% / 15);
+}  
+
+.square span{
+  display: none;
+}
+
+.square.clicked span{
+  display: block;
+}
+
+.square.clicked {
+  background-color: #009C9C;
+}
+
