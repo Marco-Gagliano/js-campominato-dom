@@ -26,8 +26,8 @@ body{
 }
 
 .square-easy{    
-  width: calc(100% / 7);
-  height: calc(100% / 7);
+  width: calc(100% / 10);
+  height: calc(100% / 10);
 }  
 
 .square-medium{    
@@ -36,13 +36,13 @@ body{
 }  
 
 .square-hard{    
-  width: calc(100% / 10);
-  height: calc(100% / 10);
+  width: calc(100% / 7);
+  height: calc(100% / 7);
 } 
 
 .square-ultra-nightmare{    
-  width: calc(100% / 15);
-  height: calc(100% / 15);
+  width: calc(100% / 5);
+  height: calc(100% / 5);
 }  
 
 .square span{
@@ -55,5 +55,10 @@ body{
 
 .square.clicked {
   background-color: #009C9C;
+}
+
+.bomb {
+  background-color: #FF0000;
+  color: #FFFFFF
 }
 
