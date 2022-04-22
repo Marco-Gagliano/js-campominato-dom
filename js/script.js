@@ -24,12 +24,18 @@ const container = document.querySelector('.container');
 const buttonPlay = document.getElementById('play');
 let numberList = [];
 
+//  la constante è scritta in maiuscolo perchè ritenuta una funziona globale
+const GAME_BOMB = 16;
+
 // ho creato la funzione in cui scelgo la difficolta 
 buttonPlay.addEventListener('click', function(){
   
   container.innerHTML = ' ';
   numberList = [];
   const gameDifficulty = document.getElementById('difficulty').value;
+
+  // ho creato la const per indicare le bombe che verranno inserite qunado faccio sclego la difficoltà e far partire il gioco, da lì creo poi una funzione
+  const bombs = generatorBombs();
 
   if(gameDifficulty === 'easy'){
     init (49)
@@ -44,6 +50,13 @@ buttonPlay.addEventListener('click', function(){
     init (225)
   }
 });
+
+function generatorBombs() {
+
+  
+
+
+}
 
 // la funzione "init" con (num )è riferita al numero di celle da creare in base alla difficoltà
 function init(num){
