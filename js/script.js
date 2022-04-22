@@ -22,7 +22,6 @@ Le validazioni e i controlli possiamo farli anche in un secondo momento.
 
 const container = document.querySelector('.container');
 const buttonPlay = document.getElementById('play');
-let numberList = [];
 
 //  la constante è scritta in maiuscolo perchè ritenuta una funziona globale
 const GAME_BOMB = 16;
@@ -31,53 +30,122 @@ const GAME_BOMB = 16;
 buttonPlay.addEventListener('click', function(){
   
   container.innerHTML = ' ';
-  numberList = [];
   const gameDifficulty = document.getElementById('difficulty').value;
 
-  // ho creato la const per indicare le bombe che verranno inserite qunado faccio sclego la difficoltà e far partire il gioco, da lì creo poi una funzione
-  const bombs = generatorBombs();
-
   if(gameDifficulty === 'easy'){
-    init (49)
+    init (100)
   }
   else if(gameDifficulty === 'medium'){
     init (81)
   }
   else if(gameDifficulty === 'hard'){
-    init (100)
+    init (49)
   }
   else if(gameDifficulty === 'ultra-nightmare'){
-    init (225)
+    init (20)
   }
-});
 
-function generatorBombs() {
+  }
+);
 
+
+
+function generatorBombs(numbers) {
+
+  // creo un array in cui le bombe non son altro che un elenco di numeri
+  const generateBombs = [];
+
+  while (generateBombs.length < GAME_BOMB) {
+    const bomb = getRandomNumber(1, numbers);
+
+    // includes permette di verificare se un elemento è presente in un array o anche in una stringa di testo
+    if (!generateBombs.includes(bomb)) {
+
+      //inserisce i dati nell'array
+      generateBombs.push(bomb);
+    }
+  }
   
-
+  // restitusico l'array in modo tale che non sia più vuoto
+  return generateBombs
 
 }
+
+
 
 // la funzione "init" con (num )è riferita al numero di celle da creare in base alla difficoltà
 function init(num){
-    
 
-// con la funzione "for" creo la condizione che genero tutti i quadratini
-for(let i = 1; i <= num; i++){
+  const bomb = generatorBombs(num);
+  let scorePoint = 0;
 
-  // la funzione "createSquare" genero il quadratino e me lo restituisce
-  const game = createSquare(container, num)
   
-  // genero dentro lo span in HTML il Numero dentro il quadrato
-  game.innerHTML = `<span>${i}</span>`;
+  // con la funzione "for" creo la condizione che genero tutti i quadratini
+  for(let i = 1; i <= num; i++){
 
-  // ascolto l'evento click al quadratino generato
-  game.addEventListener('click', function(){
+    // la funzione "createSquare" genero il quadratino e me lo restituisce
+    const game = createSquare(container, num);
 
-    // "this" è una parola chiave che mi dice quale è l'elemento clickato 
-    this.classList.add('clicked');
-    })}
+    // Seleziona tutti gli elementi con classe "square"
+    const squares = document.querySelectorAll('.square');
+  
+    // genero dentro lo span in HTML il Numero dentro il quadrato
+    game.innerHTML = `<span>${i}</span>`;
+    bomb.innerHTML = `<span>${i}</span>`;
+
+    game.innerNumberSquare = i;
+
+    // ascolto l'evento click al quadratino generato
+    game.addEventListener('click', function(){
+
+      // "this" è una parola chiave che mi dice quale è l'elemento clickato 
+      
+
+      if(!bomb.includes(this.innerNumberSquare)){
+        
+        // "this" è una parola chiave che mi dice quale è l'elemento clickato 
+        this.classList.add('clicked');
+
+        // aggiunge il valore a una variabile e assegna il risultato alla variabile
+        scorePoint += 1
+      }
+
+        else {
+          for(let i = 1; i <= num; i++){
+            if(bomb[i] == squares[i]){
+            game.classList.add('bomb');
+            }  
+          }
+        }
+        document.getElementById('scorepoint').innerHTML = `Game Over, ha totalizzato ${scorePoint} Punti`
+      }
+    )
+  }
 }
+
+
+function generatorBombs(numbers) {
+
+  // creo un array in cui le bombe non son altro che un elenco di numeri
+  const generateBombs = [];
+
+  while (generateBombs.length < GAME_BOMB) {
+    const bomb = getRandomNumber(1, numbers);
+
+    // includes permette di verificare se un elemento è presente in un array o anche in una stringa di testo
+    if (!generateBombs.includes(bomb)) {
+
+      //inserisce i dati nell'array
+      generateBombs.push(bomb);
+    }
+  }
+  
+  // restitusico l'array in modo tale che non sia più vuoto
+  return generateBombs
+
+}
+
+
 
 // creo la funzione in cui genero i numeri dei quadrati in base alla difficoltà
 function createSquare(target, num){
@@ -85,28 +153,27 @@ function createSquare(target, num){
   const sq = document.createElement('div');
   sq.className = 'square';
 
-  // ottengo un numero univoco
-  // const number = getUniqueRandomNumber(1, 100);
   
-  if(num === 49){
+  if(num === 100){
     sq.classList.add('square-easy');
   }
   else if(num === 81){
     sq.classList.add('square-medium');
   }
-  else if(num === 100){
+  else if(num === 49){
     sq.classList.add('square-hard');
   }
-  else if(num === 225){
+  else if(num === 20){
     sq.classList.add('square-ultra-nightmare');
   }
-
-  // aggiungo la classe even o odd in base al calcolo della funzione  dedicata
-  // sq.classList.add(getOddEven(number));
 
   // appendo l'elemento al container
   target.append(sq);
 
   // restituisco l'elemento creato
   return sq;
+}
+
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }
