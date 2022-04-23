@@ -11,18 +11,25 @@
 <body>
 
   <header>
+
+    <div class="d-flex justify-content-between align-content-center">
+    </div>
     
-    <div class="d-flex justify-content-end">
+    <div class="d-flex justify-content-between align-content-center mx-3 my-3">
+      <h3 class="fw-bold">Campo Minato</h3>
+      <div>
         <label for="">Difficoltà :</label>
         <select id="difficulty">
-          <option value=""></option>
-          <option value="easy">Easy</option>
-          <option value="medium">Medium</option>
-          <option value="hard">Hard</option>
-          <option value="ultra-nightmare">Ultra Nightmare</option>
+          <option value="">Select</option>
+          <option class="bg-success"value="easy">Easy</option>
+          <option class="bg-warning"value="medium">Medium</option>
+          <option class="bg-danger"value="hard">Hard</option>
+          <option class="bg-dark text-light"value="ultra-nightmare">Ultra Nightmare</option>
         </select>
-        <input type="submit" id="play" value="Play">
+        <input class="btn-success mx-2" type="submit" id="play" value="Play">
+        <input class="btn-danger" type="submit" id="reset" value="Reset">
       </form>
+    </div>
     </div>
     
 
@@ -34,13 +41,21 @@
 
       <div class="container"></div>
 
+      
     </div>
 
-    <h1 id="scorepoint"></h1>
-
+    <div>
+      <h1 id="scorepoint"></h1>
+    </div>
+    
   </main>
+  
+  <footer>
 
-  <footer></footer>
+
+    <h1 class="text-center">Made with &hearts; from Boolean</h1>
+
+  </footer>
 
   <script src="js/script.js"></script>
   

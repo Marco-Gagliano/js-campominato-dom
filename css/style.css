@@ -1,12 +1,23 @@
 body{
   font-family: Arial, Helvetica, sans-serif
 }
+/* HEADER */
+
+
+/* MAIN  */
 .minefield{
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #021527;
-  height: 100vh;
+  height: 77vh;
+}
+
+#scorepoint {
+  background-color: #021527;
+  padding-bottom: 15px;
+  text-align: center;
+  color: #FFFFFF;
 }
 
 .container{
@@ -59,6 +70,13 @@ body{
 
 .bomb {
   background-color: #FF0000;
-  color: #FFFFFF
+  color: #FFFFFF;
 }
+
+#play, #reset {
+  border-radius: 5px;
+}
+
+
+/* FOOTER */
 
