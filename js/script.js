@@ -1,6 +1,5 @@
 /*
 CONTINAUZIONE
-
 - Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe.
 - I numeri nella lista delle bombe non possono essere duplicati.
 - In seguito l’utente clicca su una cella: se il numero è presente nella lista dei numeri generati - abbiamo calpestato una bomba - la cella si colora di rosso e la partita termina, altrimenti la cella cliccata si colora di azzurro e l’utente può continuare a cliccare sulle altre celle.
@@ -21,10 +20,12 @@ Le validazioni e i controlli possiamo farli anche in un secondo momento.
 
 
 const container = document.querySelector('.container');
+const main = document.querySelector('.main');
 const buttonPlay = document.getElementById('play');
+const buttonReset = document.getElementById('reset');
 
 //  la constante è scritta in maiuscolo perchè ritenuta una funziona globale
-const GAME_BOMB = 16;
+const NUMBER_BOMBS = 16;
 
 // ho creato la funzione in cui scelgo la difficolta 
 buttonPlay.addEventListener('click', function(){
@@ -48,28 +49,12 @@ buttonPlay.addEventListener('click', function(){
   }
 );
 
-
-
-function generatorBombs(numbers) {
-
-  // creo un array in cui le bombe non son altro che un elenco di numeri
-  const generateBombs = [];
-
-  while (generateBombs.length < GAME_BOMB) {
-    const bomb = getRandomNumber(1, numbers);
-
-    // includes permette di verificare se un elemento è presente in un array o anche in una stringa di testo
-    if (!generateBombs.includes(bomb)) {
-
-      //inserisce i dati nell'array
-      generateBombs.push(bomb);
-    }
-  }
+// creato la funzione che resetta
+buttonReset.addEventListener('click', function(){
+  container.innerHTML = ' ';
   
-  // restitusico l'array in modo tale che non sia più vuoto
-  return generateBombs
+});
 
-}
 
 
 
@@ -94,6 +79,7 @@ function init(num){
     bomb.innerHTML = `<span>${i}</span>`;
 
     game.innerNumberSquare = i;
+    game.innerNumberSquare = num;
 
     // ascolto l'evento click al quadratino generato
     game.addEventListener('click', function(){
@@ -112,8 +98,14 @@ function init(num){
 
         else {
           for(let i = 1; i <= num; i++){
-            if(bomb[i] == squares[i]){
+            if(bomb.includes[i] == squares[i]){
             game.classList.add('bomb');
+
+          for(let i = 0; i < squares.length; i++){
+            if(bomb.includes(squares[i].innerNumberSquare)){
+            squares[i].classList.add('bomb');
+              }
+            }
             }  
           }
         }
@@ -129,7 +121,7 @@ function generatorBombs(numbers) {
   // creo un array in cui le bombe non son altro che un elenco di numeri
   const generateBombs = [];
 
-  while (generateBombs.length < GAME_BOMB) {
+  while (generateBombs.length < NUMBER_BOMBS) {
     const bomb = getRandomNumber(1, numbers);
 
     // includes permette di verificare se un elemento è presente in un array o anche in una stringa di testo
@@ -175,5 +167,7 @@ function createSquare(target, num){
 }
 
 function getRandomNumber(min, max) {
+
   return Math.floor(Math.random() * (max - min + 1) + min);
+
 }
