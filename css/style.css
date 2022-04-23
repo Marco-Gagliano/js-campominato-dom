@@ -66,11 +66,16 @@ body{
 
 .square.clicked {
   background-color: #009C9C;
+  background-image: url(/img/576-5765265_transparent-northern-star-png-clipart.png);
+  background-size: cover;
 }
+
 
 .bomb {
   background-color: #FF0000;
   color: #FFFFFF;
+  background-image: url(/img/bomb-icon-16.jpg);
+  background-size: cover;
 }
 
 #play, #reset {
