@@ -1,7 +1,8 @@
 /*
 CONTINAUZIONE
-- Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe.
-- I numeri nella lista delle bombe non possono essere duplicati.
+
+- Il computer deve generare 16 numeri casuali nello stesso range della difficoltà prescelta: le bombe. (FATTO)
+- I numeri nella lista delle bombe non possono essere duplicati. (FATTO)
 - In seguito l’utente clicca su una cella: se il numero è presente nella lista dei numeri generati - abbiamo calpestato una bomba - la cella si colora di rosso e la partita termina, altrimenti la cella cliccata si colora di azzurro e l’utente può continuare a cliccare sulle altre celle.
 - La partita termina quando il giocatore clicca su una bomba o raggiunge il numero massimo possibile di numeri consentiti.
 - Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l’utente ha cliccato su una cella che non era una bomba.
@@ -17,44 +18,45 @@ Le validazioni e i controlli possiamo farli anche in un secondo momento.
 */
 
 
-
-
 const container = document.querySelector('.container');
-const main = document.querySelector('.main');
 const buttonPlay = document.getElementById('play');
 const buttonReset = document.getElementById('reset');
-
 //  la constante è scritta in maiuscolo perchè ritenuta una funziona globale
-const NUMBER_BOMBS = 16;
+const GAME_BOMB = 16;
 
 // ho creato la funzione in cui scelgo la difficolta 
 buttonPlay.addEventListener('click', function(){
   
   container.innerHTML = ' ';
+  container.classList.remove('pe-none');
+  document.getElementById('scorepoint').innerHTML = ` `;
+
+  let mySound = new Audio('audio/CGS_GAME_START_SOUNDS_003.wav');
+  mySound.play();
+
   const gameDifficulty = document.getElementById('difficulty').value;
 
   if(gameDifficulty === 'easy'){
-    init (100)
+    init (100);
   }
   else if(gameDifficulty === 'medium'){
-    init (81)
+    init (81);
   }
   else if(gameDifficulty === 'hard'){
-    init (49)
+    init (49);
   }
   else if(gameDifficulty === 'ultra-nightmare'){
-    init (20)
+    init (20);
   }
 
   }
 );
 
-// creato la funzione che resetta
 buttonReset.addEventListener('click', function(){
   container.innerHTML = ' ';
   
-});
-
+  }
+);
 
 
 
@@ -62,6 +64,7 @@ buttonReset.addEventListener('click', function(){
 function init(num){
 
   const bomb = generatorBombs(num);
+  
   let scorePoint = 0;
 
   
@@ -71,15 +74,7 @@ function init(num){
     // la funzione "createSquare" genero il quadratino e me lo restituisce
     const game = createSquare(container, num);
 
-    // Seleziona tutti gli elementi con classe "square"
-    const squares = document.querySelectorAll('.square');
-  
-    // genero dentro lo span in HTML il Numero dentro il quadrato
-    game.innerHTML = `<span>${i}</span>`;
-    bomb.innerHTML = `<span>${i}</span>`;
-
     game.innerNumberSquare = i;
-    game.innerNumberSquare = num;
 
     // ascolto l'evento click al quadratino generato
     game.addEventListener('click', function(){
@@ -88,28 +83,39 @@ function init(num){
       
 
       if(!bomb.includes(this.innerNumberSquare)){
+
+        let mySound = new Audio('audio/RTG_Button_Confirm_1_ST.wav');
+        mySound.play();
         
         // "this" è una parola chiave che mi dice quale è l'elemento clickato 
         this.classList.add('clicked');
 
         // aggiunge il valore a una variabile e assegna il risultato alla variabile
-        scorePoint += 1
+        scorePoint += 1;
       }
 
         else {
-          for(let i = 1; i <= num; i++){
-            if(bomb.includes[i] == squares[i]){
-            game.classList.add('bomb');
+          const squares = document.querySelectorAll('.square');
 
-          for(let i = 0; i < squares.length; i++){
-            if(bomb.includes(squares[i].innerNumberSquare)){
-            squares[i].classList.add('bomb');
+          for(let i = 1; i <= num; i++){
+            if(bomb[i] == squares[i]){
+
+              game.classList.add('bomb');
+
+              let mySound = new Audio('audio/RTG_Weapon_BreakBarrel_3_ST.wav');
+              mySound.play();
+
+              for(let i = 0; i < squares.length; i++){
+
+                if(bomb.includes(squares[i].innerNumberSquare)){
+                squares[i].classList.add('bomb');
               }
-            }
+                document.getElementById('scorepoint').innerHTML = `Game Over, ha totalizzato ${scorePoint} Punti`;
+                container.classList.add('pe-none');
+              }
             }  
           }
         }
-        document.getElementById('scorepoint').innerHTML = `Game Over, ha totalizzato ${scorePoint} Punti`
       }
     )
   }
@@ -120,21 +126,24 @@ function generatorBombs(numbers) {
 
   // creo un array in cui le bombe non son altro che un elenco di numeri
   const generateBombs = [];
+  console.log(generateBombs);
 
-  while (generateBombs.length < NUMBER_BOMBS) {
-    const bomb = getRandomNumber(1, numbers);
-
-    // includes permette di verificare se un elemento è presente in un array o anche in una stringa di testo
-    if (!generateBombs.includes(bomb)) {
-
-      //inserisce i dati nell'array
-      generateBombs.push(bomb);
+  while (generateBombs.length < GAME_BOMB) {
+    let flag = false;
+    
+    while(!flag) {
+      const bomb = getRandomNumber(1, numbers);
+      
+      // includes permette di verificare se un elemento è presente in un array o anche in una stringa di testo
+      if (!generateBombs.includes(bomb)) {
+        flag = true;
+        //inserisce i dati nell'array
+        generateBombs.push(bomb);
+      }
     }
   }
-  
   // restitusico l'array in modo tale che non sia più vuoto
-  return generateBombs
-
+  return generateBombs;
 }
 
 
@@ -167,7 +176,5 @@ function createSquare(target, num){
 }
 
 function getRandomNumber(min, max) {
-
   return Math.floor(Math.random() * (max - min + 1) + min);
-
 }
